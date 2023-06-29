@@ -122,7 +122,7 @@ export default function AuthSingUp() {
                 password: password,
             };
             axios
-                .post("user/register/", formData)
+                .post("https://api.modumanito.site/user/register/", formData)
                 .then((response) => {
                     console.log("Response", response);
                     if (response.data.message == "회원가입 성공") {

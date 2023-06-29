@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
+import axios from "axios";
 import Lottie from "react-lottie";
 import animationData from "../../assets/lottie/giftbox.json";
 import {
@@ -22,11 +22,21 @@ import {
     MainWrapper,
 } from "./style";
 
+import { accessTokenState, refreshTokenState } from "../../store/authState";
+import { useRecoilState, useSetRecoilState } from "recoil";
+
 export default function Main() {
+    const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+    const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState);
+
     const [userData, setUserData] = useState("");
     const [manitoData, setManitoData] = useState([]);
     const [visiModal, setVisiModal] = useState({ display: "none" });
+
     const navigate = useNavigate();
+
+    console.log("setAccessToken" + accessToken);
+    console.log("setRefreshsToken" + refreshToken);
 
     const defaultOptions = {
         loop: true,
@@ -44,7 +54,9 @@ export default function Main() {
 
     async function getManitoData(id) {
         try {
-            const response = await axios.get(`manito/${id}/partner/`);
+            const response = await axios.get(
+                `https://api.modumanito.site/manito/${id}/partner/`
+            );
             const resData = response.data;
             console.log(resData);
         } catch (error) {
@@ -54,14 +66,29 @@ export default function Main() {
 
     async function postSignOut() {
         try {
-            const response = await axios.post(`user/signout/`, "");
+            const response = await axios.post(
+                "https://api.modumanito.site/user/signout/",
+                "",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${refreshToken}`,
+                    },
+                }
+            );
             const resData = response.data;
             console.log(resData);
         } catch (error) {
             console.error("Error", error);
         }
+
         axios
-            .post("user/signout/", "")
+            .post("user/signout/", "", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${refreshToken}`,
+                },
+            })
             .then((response) => {
                 console.log("Response", response);
                 navigate("/login");
@@ -107,6 +134,7 @@ export default function Main() {
                             outline: "none",
                             background: "none",
                             color: "#9d1525",
+                            cursor: "pointer",
                         }}
                     >
                         로그아웃

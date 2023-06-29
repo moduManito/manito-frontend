@@ -6,7 +6,8 @@ import Lottie from "react-lottie";
 import animationData from "../../assets/lottie/giftbox.json";
 import { useSetRecoilState } from "recoil";
 
-import { accessTokenState } from "../../store/authState";
+import { accessTokenState, refreshTokenState } from "../../store/authState";
+
 import {
     Modal,
     LoginAccountFuncSignup,
@@ -28,6 +29,9 @@ import {
 } from "./style";
 
 export default function AuthLogin({ setUserData }) {
+    const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+    const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState);
+
     const [errMsg, setErrMsg] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -55,7 +59,12 @@ export default function AuthLogin({ setUserData }) {
     //     setTotalManito(1000);
     // }, []);
 
-    const setAccessToken = useSetRecoilState(accessTokenState);
+    // const setAccessToken = useSetRecoilState(accessTokenState);
+    // const setRefreshToekn = useSetRecoilState(refreshTokenState);
+
+    if (setAccessToken) {
+        navigate("/");
+    }
 
     function nullCheck(value) {
         if (
@@ -97,8 +106,9 @@ export default function AuthLogin({ setUserData }) {
                     if (response.data.message == "로그인 성공") {
                         console.log(response.data);
                         setUserData(response.data);
+
                         setAccessToken(response.data.token.access);
-                        console.log(response.data.token.access);
+                        setRefreshToken(response.data.token.refresh);
 
                         navigate("/");
                     }

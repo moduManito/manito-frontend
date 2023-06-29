@@ -9,6 +9,7 @@ import AuthLogin from "./pages/Auth/AuthLogin";
 import AuthSignUp from "./pages/Auth/AuthSignUp";
 import Main from "./pages/Main/Main";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 const BodyWrapper = styled.div`
     text-align: center;
@@ -77,7 +78,6 @@ function App() {
     return (
         <>
             <Reset />
-
             {/* 로그인 및 회원 가입 */}
             <Routes>
                 <Route element={<AuthLayout />}>

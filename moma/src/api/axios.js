@@ -15,6 +15,7 @@ const instance = axios.create({
 
 const AuthorizedInstance = () => {
     const accessToken = useRecoilValue(accessTokenState);
+    console.log("Recoil에서 확인하는 accessToken값은 :" + accessToken);
 
     useEffect(() => {
         instance.defaults.headers.common[
