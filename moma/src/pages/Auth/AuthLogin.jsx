@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
+import axios from "../../api/axios2";
 import Lottie from "react-lottie";
+
 import animationData from "../../assets/lottie/giftbox.json";
+import { useSetRecoilState } from "recoil";
+
+import { accessTokenState } from "../../store/authState";
 import {
     Modal,
     LoginAccountFuncSignup,
@@ -23,7 +27,7 @@ import {
     LoginTotalManitoCounter,
 } from "./style";
 
-export default function AuthLogin() {
+export default function AuthLogin({ setUserData }) {
     const [errMsg, setErrMsg] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -50,6 +54,8 @@ export default function AuthLogin() {
     // useEffect(() => {
     //     setTotalManito(1000);
     // }, []);
+
+    const setAccessToken = useSetRecoilState(accessTokenState);
 
     function nullCheck(value) {
         if (
@@ -89,15 +95,23 @@ export default function AuthLogin() {
                 .then((response) => {
                     console.log("Response", response);
                     if (response.data.message == "로그인 성공") {
+                        console.log(response.data);
+                        setUserData(response.data);
+                        setAccessToken(response.data.token.access);
+                        console.log(response.data.token.access);
+
                         navigate("/");
                     }
                 })
                 .catch((error) => {
                     setVisiModal({ display: "none" });
                     console.log("Error", error);
-                    setErrMsg("존재하지 않는 계정입니다.");
+                    alert("존재하지 않는 계정입니다.");
+                    // setErrMsg("존재하지 않는 계정입니다.");
                 });
         } else {
+            alert("로그인에 실패했습니다. 나중에 다시 시도해주세요.");
+            // setErrMsg("로그인에 실패했습니다. 나중에 다시 시도해주세요.");
             console.log("Fail");
         }
     }

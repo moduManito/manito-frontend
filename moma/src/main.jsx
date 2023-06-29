@@ -1,13 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import "./assets/fonts/Font.css"
-import { BrowserRouter } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App.jsx";
+import "./assets/fonts/Font.css";
+import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
-
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename='/'>
-    <App />
-  </BrowserRouter>,
-)
+ReactDOM.render(
+    <React.StrictMode>
+        <BrowserRouter basename="/">
+            <RecoilRoot>
+                <App />
+            </RecoilRoot>
+        </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById("root")
+);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../api/axios";
+import axios from "../../api/axios2";
 import { useNavigate } from "react-router-dom";
 import Lottie from "react-lottie";
 import animationData from "../../assets/lottie/giftbox.json";
@@ -126,6 +126,7 @@ export default function AuthSingUp() {
                 .then((response) => {
                     console.log("Response", response);
                     if (response.data.message == "회원가입 성공") {
+                        alert("회원가입을 축하합니다 :) 로그인 해주세요! ");
                         navigate("/login");
                     }
                 })

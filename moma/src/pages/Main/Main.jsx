@@ -51,6 +51,25 @@ export default function Main() {
             console.error("Error", error);
         }
     }
+
+    async function postSignOut() {
+        try {
+            const response = await axios.post(`user/signout/`, "");
+            const resData = response.data;
+            console.log(resData);
+        } catch (error) {
+            console.error("Error", error);
+        }
+        axios
+            .post("user/signout/", "")
+            .then((response) => {
+                console.log("Response", response);
+                navigate("/login");
+            })
+            .catch((error) => {
+                console.log("Error", error);
+            });
+    }
     getManitoData(2);
 
     useEffect(() => {
@@ -80,6 +99,18 @@ export default function Main() {
                 <MainLogo>모마</MainLogo>
                 <MainHeaderText>
                     {userData} 마니또님, 환영합니다!
+                    <button
+                        onClick={postSignOut}
+                        style={{
+                            borderRadius: "20px",
+                            border: "1px solid #9d1525",
+                            outline: "none",
+                            background: "none",
+                            color: "#9d1525",
+                        }}
+                    >
+                        로그아웃
+                    </button>
                 </MainHeaderText>
             </MainHeader>
             <MainBody>

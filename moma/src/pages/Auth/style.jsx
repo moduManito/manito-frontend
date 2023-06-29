@@ -83,6 +83,7 @@ export const LoginSubmitButton = styled.button`
     font-size: 18px;
     font-weight: bold;
     color: #fbfbfb;
+    cursor: pointer;
 `;
 
 export const LoginAccountFuncWrap = styled.div`
@@ -179,6 +180,7 @@ export const SignupInputHint = styled.div`
 
 export const SignupSubmitButton = styled.button`
     padding: 18px 21px;
+    cursor: pointer;
     background: #c02e21;
     outline: none;
     border: none;

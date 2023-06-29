@@ -7,8 +7,8 @@ import DetailManito from "./pages/Detail/DetailManito";
 import CreateManito from "./pages/Create/CreateManito";
 import AuthLogin from "./pages/Auth/AuthLogin";
 import AuthSignUp from "./pages/Auth/AuthSignUp";
-import CreateDoneManito from "./pages/Create/CreateDoneManito";
 import Main from "./pages/Main/Main";
+import { useState } from "react";
 
 const BodyWrapper = styled.div`
     text-align: center;
@@ -73,6 +73,7 @@ const AuthLayout = () => {
 // 로그인 여부 파악하기
 // 만약 로그인 유저시 아래 Routes보이게 하기
 function App() {
+    const [userData, setUserData] = useState("");
     return (
         <>
             <Reset />
@@ -80,7 +81,10 @@ function App() {
             {/* 로그인 및 회원 가입 */}
             <Routes>
                 <Route element={<AuthLayout />}>
-                    <Route path="/login" element={<AuthLogin />} />
+                    <Route
+                        path="/login"
+                        element={<AuthLogin setUserData={setUserData} />}
+                    />
                     <Route path="/signup" element={<AuthSignUp />} />
                 </Route>
 

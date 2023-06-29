@@ -20,6 +20,10 @@ export const MainLogo = styled.div`
 `;
 
 export const MainHeaderText = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     font-size: 18px;
 `;
 
